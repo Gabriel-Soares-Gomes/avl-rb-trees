@@ -1,6 +1,11 @@
 #include "../include/AVLNode.h"
 
-AVLNode::AVLNode(int id){ this->id = id; }
+AVLNode::AVLNode(int id){ 
+    this->id = id;
+    height = 1;
+    left = nullptr;
+    right = nullptr;
+}
 int AVLNode::get_id() const { return id; }
 int AVLNode::get_height() const { return height; }
 AVLNode* AVLNode::get_left() const{ return left; }
