@@ -17,6 +17,7 @@ class AVLNode{
         AVLNode* get_left() const;
         AVLNode* get_right() const;
 
+        void set_id(int id);
         void set_height(int height);
         void set_left(AVLNode* node);
         void set_right(AVLNode* node);
