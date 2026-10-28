@@ -120,12 +120,8 @@ void interact_menu(AVLTree& avl, LLRBTree& llrb) {
     }
 }
 
-// ======================================================================================
-//  TESTES DE ESTRESSE (execucao silenciosa: so a tabela consolidada e exibida)
-// ======================================================================================
+//Testes de estresse
 
-// Metricas de uma arvore em um cenario. Tempo < 0 e valores <= 0 em altura,
-// rotacoes e balanceamentos sao exibidos como "-" na tabela.
 struct Metrics {
     double time_us = -1;
     int height = 0;
@@ -216,9 +212,8 @@ void run_stress_test_for_n(int N, std::vector<Row>& rows) {
                      bench_mass_removal<AVLTree>(rnd, N / 2), bench_mass_removal<LLRBTree>(rnd, N / 2) });
 }
 
-// ======================================================================================
-//  TABELA CONSOLIDADA
-// ======================================================================================
+
+//  TABELA 
 
 namespace tbl {
     // Largura util de cada coluna (sem contar o espaco de cada lado)
@@ -312,9 +307,7 @@ void print_consolidated_scaling_table(const std::vector<Row>& rows) {
               << "         Tempo em us (microssegundos) ou ms (milissegundos) | '-' = nao se aplica\n";
 }
 
-// ======================================================================================
 //  CASOS DE BORDA (secao separada, exibida abaixo da tabela consolidada)
-// ======================================================================================
 
 struct EdgeCase {
     std::string name;
@@ -406,28 +399,28 @@ void run_and_print(const std::vector<int>& sizes) {
 void automatic_tests_menu() {
     while (true) {
         print_header("MENU - TESTES AUTOMATICOS E ESTRESSE");
-        std::cout << "1) Executar bateria completa (1000, 2000, 4000 e 8000 elementos)\n"
+        std::cout << "1) Executar bateria completa (1000, 5000, 10000, 25000 e 50000 elementos)\n"
                   << "2) Definir quantidade personalizada de elementos\n"
                   << "3) Voltar ao menu principal\n";
         print_divider();
         int op = read_int("Escolha uma opcao: ");
 
         if (op == 1) {
-            run_and_print({1000, 2000, 4000, 8000});
+            run_and_print({1000, 5000, 10000, 25000, 50000});
         } else if (op == 2) {
-            std::cout << "\n[Info] A quantidade deve estar entre 10 e 50.000 elementos.\n";
-            int n = read_int("Digite a quantidade de elementos desejada (10 a 50000): ");
+            std::cout << "\n Para evitar travamentos, a quantidade informada deve estar entre 10 e 200000 (200 mil)\n";
+            int n = read_int("Digite a quantidade de elementos desejada (10 a 200 mil): ");
             if (n < 10) {
-                std::cout << "\n[Erro] Quantidade muito pequena! O minimo e 10 elementos.\n";
-            } else if (n > 50000) {
-                std::cout << "\n[Erro] Quantidade excessiva! O maximo seguro e 50.000 elementos.\n";
+                std::cout << "\n[Erro] Quantidade muito pequena! O minimo é 10 elementos.\n";
+            } else if (n > 200000) {
+                std::cout << "\n[Erro] Quantidade excessiva! O máximo seguro é 200.000 elementos.\n";
             } else {
                 run_and_print({n});
             }
         } else if (op == 3) {
             break;
         } else {
-            std::cout << "\n[Erro] Opcao invalida! Escolha 1, 2 ou 3.\n";
+            std::cout << "\n[Erro] Opção inválida! Escolha 1, 2 ou 3.\n";
         }
     }
 }
